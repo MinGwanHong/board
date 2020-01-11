@@ -181,3 +181,10 @@ form .form-group{
  margin-top: 5px;
  margin-bottom: 11px;
 }
+.board-table {
+  table-layout: fixed;
+}
+.board-table .author,
+.board-table .date {
+  width: 100px;
+}

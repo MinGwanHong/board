@@ -3,8 +3,9 @@ var util  = require("../util");
 
 //schema
 var postSchema = mongoose.Schema({ // 1
-  title:{type:String, required:true},
-  body:{type:String},
+  title:{type:String, required:[true,'Title is required!']},
+  body:{type:String, required:[true,'Body is required!']},
+  author:{type:mongoose.Schema.Types.ObjectId, ref:'user', required:true},
   createdAt:{type:Date, default:Date.now}, // 2
   updatedAt:{type:Date},
 },{

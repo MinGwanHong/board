@@ -14,17 +14,17 @@ util = parseError = function(errors){
   }
 
   return parsed;
-}
+};
 
 util.getDate = function(dateObj){
  if(dateObj instanceof Date)
   return dateObj.getFullYear() + "-" + get2digits(dateObj.getMonth()+1)+ "-" + get2digits(dateObj.getDate());
-}
+};
 
 util.getTime = function(dateObj){
  if(dateObj instanceof Date)
   return get2digits(dateObj.getHours()) + ":" + get2digits(dateObj.getMinutes())+ ":" + get2digits(dateObj.getSeconds());
-}
+};
 
 module.exports = util;
 

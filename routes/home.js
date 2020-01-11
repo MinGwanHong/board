@@ -27,7 +27,11 @@ router.post('/login', function(req, res, next){
 
   if(!req.body.username){
     isValid = false;
-    errors.username = "Username is Required!";
+    errors.username = 'Username is required!';
+  }
+  if(!req.body.password){
+    isValid = false;
+    errors.password = 'Password is required!';
   }
 
   if(isValid){
@@ -38,8 +42,8 @@ router.post('/login', function(req, res, next){
   }
 },
 passport.authenticate('local-login', {
-  successRedirect : '/',
-  failuserRedirect : '/login'
+  successRedirect  : '/',
+  failureRedirect  : '/login'
 }));
 
 // Logout.
