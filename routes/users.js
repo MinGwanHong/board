@@ -4,14 +4,14 @@ var User  = require("../models/User");
 var util = require('../util');
 
 // Index // 1
-router.get("/", function(req, res){
- User.find({})
- .sort({username:1})
- .exec(function(err, users){
-  if(err) return res.json(err);
-  res.render("users/index", {users:users});
- });
-});
+// router.get("/", function(req, res){
+//  User.find({})
+//  .sort({username:1})
+//  .exec(function(err, users){
+//   if(err) return res.json(err);
+//   res.render("users/index", {users:users});
+//  });
+// });
 
 // New
 router.get("/new", function(req, res){
@@ -39,7 +39,7 @@ router.post("/", function(req, res){
 });
 
 // show
-router.get("/:username", function(req, res){
+router.get("/:username", util.isLoggedin, checkPermission, function(req, res){
  User.findOne({username:req.params.username}, function(err, user){
   if(err) return res.json(err);
   res.render("users/show", {user:user});
@@ -47,7 +47,7 @@ router.get("/:username", function(req, res){
 });
 
 // edit
-router.get("/:username/edit", function(req, res){
+router.get("/:username/edit", util.isLoggedin, checkPermission, function(req, res){
   var user = req.flash('user')[0];
   var errors = req.flash('errors')[0] || {};
   if(!user){
@@ -61,7 +61,7 @@ router.get("/:username/edit", function(req, res){
 });
 
 // update // 2
-router.put("/:username",function(req, res, next){
+router.put("/:username", util.isLoggedin, checkPermission, function(req, res, next){
  User.findOne({username:req.params.username}) // 2-1
  .select({password : 1}) // 2-2
  .exec(function(err, user){
@@ -87,3 +87,13 @@ router.put("/:username",function(req, res, next){
 });
 
 module.exports = router;
+
+//private function
+function checkPermission(req, res, next){
+  Post.findOne({username:req.params.username}, function(err, post){
+    if(err) return res.json(err);
+    if(user.id != req.user.id) return util.noPermission(req, res);
+
+    next();
+  });
+}

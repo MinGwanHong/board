@@ -9,8 +9,10 @@
   <div class="container post post-index">
    <%- include('../partials/header') %>
 
-   <div class="buttons">
-    <a class="btn btn-default" href="/posts/new">New</a>
+   <div>
+     <% if(isAuthenticated){ %>
+       <a class="btn btn-default" href="/posts/new">New</a>
+     <% } %>
    </div>
 
    <table class="board-table table table-sm border-bottom">
